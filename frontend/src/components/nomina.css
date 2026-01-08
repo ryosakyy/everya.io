@@ -1,0 +1,122 @@
+/* Archivo: C:\Users\Usuario\Downloads\EVERYA\frontend\src\components\nomina.css */
+
+.nomina-card {
+    width: 100%;
+    max-width: 760px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 16px;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, .10);
+    overflow: hidden;
+}
+
+.nomina-header {
+    background: #7c3aed;
+    padding: 22px 22px;
+    color: #fff;
+}
+
+.nomina-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 950;
+}
+
+.nomina-subtitle {
+    margin: 6px 0 0;
+    opacity: .9;
+    font-size: 13px;
+}
+
+.nomina-grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 18px 18px 0;
+}
+
+.nomina-box {
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0, 0, 0, .06);
+}
+
+.nomina-label {
+    font-size: 12px;
+    font-weight: 800;
+    opacity: .9;
+}
+
+.nomina-big {
+    margin-top: 6px;
+    font-size: 22px;
+    font-weight: 950;
+}
+
+.nomina-box-purple {
+    background: #f6f0ff;
+    color: #4c1d95;
+}
+
+.nomina-box-green {
+    background: #ecfdf3;
+    color: #065f46;
+}
+
+.nomina-box-red {
+    background: #fff1f2;
+    color: #991b1b;
+    margin: 12px 18px 0;
+}
+
+.nomina-box-orange {
+    background: #fff7ed;
+    color: #9a3412;
+    margin: 12px 18px 0;
+}
+
+.nomina-box-final {
+    background: #7c3aed;
+    color: #fff;
+    margin: 12px 18px 0;
+}
+
+.nomina-final {
+    margin-top: 6px;
+    font-size: 28px;
+    font-weight: 950;
+}
+
+.nomina-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, .08);
+    margin: 18px 18px 0;
+}
+
+.nomina-calc-title {
+    padding: 14px 18px 0;
+    font-weight: 950;
+    font-size: 13px;
+}
+
+.nomina-calc {
+    padding: 12px 18px 18px;
+}
+
+.nomina-calc ul {
+    margin: 0;
+    padding-left: 18px;
+    background: #f9fafb;
+    border: 1px solid rgba(0, 0, 0, .06);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #374151;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@media (max-width: 680px) {
+    .nomina-grid2 {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,376 @@
+/* =========================================
+   Calendario.css - DISEÑO MODERNO
+   ========================================= */
+
+.ac-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    border: 1px solid #e2e8f0;
+}
+
+
+/* --- HERO (Header Morado) --- */
+
+.cal-hero {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    padding: 30px;
+    color: white;
+}
+
+.ac-monthbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cal-heroText {
+    text-align: center;
+}
+
+.cal-heroText h2 {
+    margin: 0;
+    font-size: 2rem;
+    text-transform: capitalize;
+    font-weight: 800;
+}
+
+.cal-heroText p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.cal-navBtn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cal-navBtn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+
+/* STATS HEADER */
+
+.cal-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cal-stat {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 15px 25px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 120px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cal-stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.cal-stat-val {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+
+/* --- BODY DEL CALENDARIO --- */
+
+.ac-body {
+    padding: 40px;
+    background: #f8fafc;
+}
+
+.loading-msg {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    padding: 40px;
+}
+
+.ac-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    color: #64748b;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.ac-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+}
+
+
+/* CELDAS (DIAS) */
+
+.ac-cell {
+    aspect-ratio: 1 / 0.8;
+    /* Rectangular */
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.ac-cell:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #a855f7;
+    z-index: 2;
+}
+
+.ac-cell.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.ac-cell.empty:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Estados visuales */
+
+.ac-cell.ok {
+    border-bottom: 4px solid #22c55e;
+}
+
+.ac-cell.late {
+    border-bottom: 4px solid #ef4444;
+    background: #fff5f5;
+}
+
+.ac-day-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #334155;
+    z-index: 5;
+    position: relative;
+}
+
+
+/* Foto de fondo en celda pequeña */
+
+.ac-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.ac-bg-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ac-mini-info {
+    margin-top: auto;
+    margin-bottom: 8px;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ac-cell.late .ac-mini-info {
+    color: #dc2626;
+}
+
+.ac-cell.ok .ac-mini-info {
+    color: #16a34a;
+}
+
+
+/* --- MODAL --- */
+
+.ac-modalBack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ac-modal {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0
+    }
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+.ac-modalHead {
+    padding: 15px 20px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ac-modalTitle {
+    font-weight: 700;
+    color: #334155;
+}
+
+.ac-x {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.ac-modalBody {
+    padding: 25px;
+}
+
+.empty-modal {
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.ac-stats-grid {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.ac-stat-box {
+    flex: 1;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.ac-stat-box label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.ac-stat-box .val {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.ac-photo-container {
+    height: 250px;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ac-evidence-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.no-photo-text {
+    color: #555;
+    background: #eee;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ac-modalFooter {
+    padding: 15px;
+    border-top: 1px solid #e2e8f0;
+    text-align: right;
+}
+
+.ac-btn-close {
+    background: #334155;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ac-btn-close:hover {
+    background: #1e293b;
+}
