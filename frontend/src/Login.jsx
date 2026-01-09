@@ -12,6 +12,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [cargando, setCargando] = useState(false);
 
+  // ⚠️ URL DE RAILWAY DEFINIDA AQUÍ
+  const API_URL = "https://everyaio-production.up.railway.app";
+
   const navigate = useNavigate();
 
   const manejarLogin = async (e) => {
@@ -25,7 +28,8 @@ export default function Login() {
     try {
       setCargando(true);
 
-      const respuesta = await axios.post("http://127.0.0.1:5000/login", {
+      // ✅ CORREGIDO: Usando la URL de la nube
+      const respuesta = await axios.post(`${API_URL}/login`, {
         dni_usuario: dni,
         password: password,
       });

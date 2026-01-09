@@ -5,13 +5,15 @@ export default function CrearEmpleadosAdmin() {
   const [empleados, setEmpleados] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // ⚠️ DEFINIMOS LA URL DEL BACKEND EN LA NUBE AQUÍ PARA NO EQUIVOCARNOS
+  const API_URL = "https://everyaio-production.up.railway.app";
+
   // Estado del formulario
   const [form, setForm] = useState({
     dni_usuario: "",
     nombre_completo: "",
     password: "",
     turno: "manana",
-    // CAMBIO IMPORTANTE: Valor por defecto 'empleado' (como en la BD)
     rol: "empleado" 
   });
 
@@ -19,7 +21,8 @@ export default function CrearEmpleadosAdmin() {
   const cargarEmpleados = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/admin/usuarios");
+      // ✅ CORREGIDO: Usa la URL de Railway
+      const res = await fetch(`${API_URL}/admin/usuarios`);
       
       if (!res.ok) {
         throw new Error(`Error del servidor: ${res.status}`);
@@ -56,7 +59,8 @@ export default function CrearEmpleadosAdmin() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/admin/usuarios", {
+      // ✅ CORREGIDO: Usa la URL de Railway
+      const res = await fetch(`${API_URL}/admin/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosParaBackend),
@@ -71,7 +75,7 @@ export default function CrearEmpleadosAdmin() {
           nombre_completo: "",
           password: "",
           turno: "manana",
-          rol: "empleado" // Reiniciar a 'empleado'
+          rol: "empleado"
         });
         cargarEmpleados(); 
       } else {
@@ -88,7 +92,8 @@ export default function CrearEmpleadosAdmin() {
     if (!window.confirm("¿Estás seguro de eliminar este usuario?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/admin/usuarios/${id}`, {
+      // ✅ CORREGIDO: Eliminado el error de doble http:// y puesto la URL correcta
+      const res = await fetch(`${API_URL}/admin/usuarios/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -137,7 +142,6 @@ export default function CrearEmpleadosAdmin() {
               <option value="tarde">🌅 Tarde</option>
             </select>
 
-            {/* CAMBIO IMPORTANTE: Values deben ser 'empleado' o 'admin' */}
             <select value={form.rol} onChange={(e) => setForm({ ...form, rol: e.target.value })}>
               <option value="empleado">Trabajador</option>
               <option value="admin">Administrador</option>
@@ -159,7 +163,6 @@ export default function CrearEmpleadosAdmin() {
                   <span className="emp-dni"> (DNI: {emp.dni_usuario})</span>
                   <br/>
                   <small className="emp-detail">
-                    {/* Visualización condicional del rol */}
                     {emp.turno} - {emp.rol === 'admin' ? <b style={{color:'red'}}>ADMIN</b> : 'Trabajador'}
                   </small>
                 </div>

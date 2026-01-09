@@ -3,8 +3,12 @@ import { useEffect, useState } from 'react';
 const ReportesAdmin = () => {
     const [asistencias, setAsistencias] = useState([]);
 
+    // ⚠️ URL DE RAILWAY
+    const API_URL = "https://everyaio-production.up.railway.app";
+
     useEffect(() => {
-        fetch('http://localhost:5000/reportes')
+        // ✅ CORREGIDO: Petición al servidor en la nube
+        fetch(`${API_URL}/reportes`)
             .then(res => res.json())
             .then(data => {
                 // Aseguramos que sea un array para evitar errores
@@ -40,7 +44,8 @@ const ReportesAdmin = () => {
                             </td>
                             <td>
                                 {reg.foto_url && (
-                                    <a href={`http://localhost:5000/fotos_asistencia/${reg.foto_url}`} target="_blank" rel="noreferrer">
+                                    // ✅ CORREGIDO: Enlace a la foto en la nube
+                                    <a href={`${API_URL}/fotos_asistencia/${reg.foto_url}`} target="_blank" rel="noreferrer">
                                         Ver
                                     </a>
                                 )}

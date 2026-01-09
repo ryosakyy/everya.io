@@ -49,7 +49,7 @@ export default function Nomina() {
     console.log(`💰 Calculando nómina. Usuario: ${miDNI || "DESCONOCIDO (Modo Prueba)"}`);
 
     // 3. OBTENER DATOS DEL BACKEND
-    fetch("http://localhost:5000/reportes")
+    fetch("https://everyaio-production.up.railway.app/reportes")
       .then((res) => res.json())
       .then((data) => {
         
