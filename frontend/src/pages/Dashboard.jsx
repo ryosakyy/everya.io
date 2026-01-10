@@ -21,7 +21,7 @@ import ReportesAdmin from "../components/admin/ReportesAdmin";
 import NominaAdmin from "../components/admin/NominaAdmin";
 
 function Dashboard() {
-  const { userName, userId, isAdmin, userTurno, logout } = useAuth();
+  const { userName, userId, isAdmin, userTurno, logout, loading } = useAuth();
   const webcamRef = useRef(null);
 
   const [tab, setTab] = useState(isAdmin ? "reportes" : "marcar");
@@ -78,6 +78,16 @@ function Dashboard() {
   useEffect(() => {
     setMensaje("");
   }, [tab]);
+
+  // Show loading screen while auth restores session
+  if (loading) {
+    return (
+      <div className="dash-loading">
+        <div className="spinner"></div>
+        <p>Cargando sesión...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dash-page">

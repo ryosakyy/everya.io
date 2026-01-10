@@ -336,7 +336,7 @@ export default function Nomina({ targetUser }) {
                             <th className="th-purple">FECHA</th>
                             <th className="th-purple">TURNO</th>
                             <th className="th-purple">PERSONAL</th>
-                            <th className="th-purple">TOTAL DÍAS<br />EFECTIVAS</th>
+                            <th className="th-purple">TOTAL DÍAS<br />EFECTIVOS</th>
                             <th className="th-purple">TOTAL<br />HORAS<br />EFECTIVAS</th>
                             <th className="th-purple">TOTAL<br />MINUTOS<br />POR DÍA</th>
                         </tr>
