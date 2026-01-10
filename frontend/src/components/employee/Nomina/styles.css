@@ -1,0 +1,213 @@
+/* Nomina Styles - Specific to "Tareo" Image clone */
+
+.nom-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #000;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.nom-loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* TOP INFO BLOCK */
+.nom-top-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.nom-info-row {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.nom-info-right {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 2px;
+}
+
+.value {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* TABLE STYLES */
+.nom-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #000;
+}
+
+.nom-table-main {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 600px;
+}
+
+.nom-table-main th,
+.nom-table-main td {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: center;
+}
+
+.th-purple {
+    background-color: #d8bcf5;
+    /* Light purple from image */
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+.nom-table-main tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* BOTTOM LAYOUT */
+.nom-bottom-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Unit Table */
+.nom-unit-table-container {
+    min-width: 200px;
+}
+
+.nom-unit-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-size: 0.85rem;
+}
+
+.nom-unit-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+
+.bg-purple {
+    background-color: #d8bcf5;
+    font-weight: 700;
+}
+
+/* Summary Table */
+.nom-summary-container {
+    flex: 1;
+    overflow-x: auto;
+}
+
+.nom-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-size: 0.85rem;
+}
+
+.nom-summary-table th,
+.nom-summary-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cell-large {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.bg-gray {
+    background-color: #f0f0f0;
+    font-weight: 700;
+    text-align: left;
+}
+
+.nom-branding {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.2rem;
+    border-top: 2px dashed #ccc;
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .nom-container {
+        padding: 10px;
+    }
+
+    .nom-bottom-layout {
+        flex-direction: column;
+    }
+
+    .nom-top-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nom-info-right {
+        margin-left: 0;
+    }
+
+    .nom-actions {
+        flex-direction: column;
+    }
+}
+
+/* Actions */
+.nom-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    justify-content: flex-end;
+}
+
+.btn-export {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-export.excel {
+    background-color: #217346;
+    color: white;
+}
+
+.btn-export.pdf {
+    background-color: #d40f2c;
+    color: white;
+}
+
+.btn-export:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}

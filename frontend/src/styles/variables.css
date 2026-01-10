@@ -1,0 +1,62 @@
+/* Archivo: src/styles/variables.css */
+
+:root {
+  /* --- PALETA PREMIUM (Violeta & Slate) --- */
+  --primary: #6366f1;
+  /* Indigo 500 */
+  --primary-hover: #4f46e5;
+  /* Indigo 600 */
+  --primary-light: #e0e7ff;
+  /* Indigo 100 */
+
+  --secondary: #ec4899;
+  /* Pink 500 - Acentos */
+
+  --bg-app: #f8fafc;
+  /* Slate 50 */
+  --bg-card: #ffffff;
+
+  --text-main: #0f172a;
+  /* Slate 900 */
+  --text-muted: #64748b;
+  /* Slate 500 */
+  --text-light: #94a3b8;
+  /* Slate 400 */
+
+  --border: #e2e8f0;
+  /* Slate 200 */
+  --line: rgba(0, 0, 0, 0.06);
+
+  /* --- ESTADOS --- */
+  --success: #10b981;
+  /* Emerald 500 */
+  --success-bg: #d1fae5;
+  --danger: #ef4444;
+  /* Red 500 */
+  --danger-bg: #fee2e2;
+  --warning: #f59e0b;
+  /* Amber 500 */
+
+  /* --- SOMBRAS --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* --- LAYOUT --- */
+  --header-height: 64px;
+  --bottom-nav-height: 60px;
+  --max-width: 1200px;
+  --radius: 16px;
+}
+
+/* Dark Mode Support (Future proofing) */
+@media (prefers-color-scheme: dark) {
+  /* :root {
+     --bg-app: #0f172a;
+     --bg-card: #1e293b;
+     --text-main: #f1f5f9;
+     --text-muted: #94a3b8;
+     --border: #334155;
+  } */
+}

@@ -1,0 +1,35 @@
+.emp-form {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.emp-form input,
+.emp-form select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.emp-form button {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.emp-list {
+    margin-top: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+.emp-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}

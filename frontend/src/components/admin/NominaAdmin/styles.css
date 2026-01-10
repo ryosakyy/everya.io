@@ -1,0 +1,124 @@
+/* Nomina Admin Styles */
+
+.na-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.na-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.na-subtitle {
+    margin: 4px 0 20px;
+    color: var(--text-muted);
+}
+
+.na-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.na-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.na-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.na-avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.na-info {
+    flex: 1;
+}
+
+.na-name {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 2px;
+}
+
+.na-role {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.na-salary {
+    font-size: 0.8rem;
+    color: var(--success);
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.na-arrow {
+    color: var(--text-light);
+    font-weight: 800;
+}
+
+/* Detail View */
+.na-detail-view {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.na-back-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    transition: 0.2s;
+}
+
+.na-back-btn:hover {
+    background: var(--bg-app);
+    color: var(--text-main);
+}
+
+.na-user-info {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.na-user-info h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--text-main);
+}
+
+.na-user-info p {
+    margin: 4px 0 0;
+    color: var(--text-muted);
+}

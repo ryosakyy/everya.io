@@ -1,0 +1,126 @@
+/* MisReportes styles */
+.mr-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.mr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mr-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.mr-badge-turno {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.mr-loading,
+.mr-empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}
+
+.mr-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mr-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.mr-card:active {
+    transform: scale(0.98);
+}
+
+.mr-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-app);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 60px;
+}
+
+.mr-day {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-main);
+}
+
+.mr-month {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.mr-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mr-row {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 8px;
+}
+
+.mr-label {
+    color: var(--text-muted);
+}
+
+.mr-val {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.mr-status {
+    text-align: right;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-badge.ok {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.status-badge.late {
+    background: var(--danger-bg);
+    color: var(--danger);
+}

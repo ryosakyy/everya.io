@@ -1,21 +1,18 @@
-// Archivo: src/Login.jsx
-
-import axios from "axios";
+/**
+ * Login Page Component
+ * Handles user authentication
+ */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { FiLock, FiLogIn, FiUser } from "react-icons/fi";
-import "./login.css";
+import { useAuth } from "../context/AuthContext";
+import "../styles/login.css";
 
 export default function Login() {
   const [dni, setDni] = useState("");
   const [password, setPassword] = useState("");
   const [cargando, setCargando] = useState(false);
 
-  // ⚠️ URL DE RAILWAY DEFINIDA AQUÍ
-  const API_URL = "https://everyaio-production.up.railway.app";
-
-  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const manejarLogin = async (e) => {
     e.preventDefault();
@@ -27,35 +24,10 @@ export default function Login() {
 
     try {
       setCargando(true);
+      const result = await login(dni, password);
 
-      // ✅ CORREGIDO: Usando la URL de la nube
-      const respuesta = await axios.post(`${API_URL}/login`, {
-        dni_usuario: dni,
-        password: password,
-      });
-
-      if (respuesta.data?.success) {
-        const u = respuesta.data.usuario || {};
-
-        console.log("✅ Login exitoso. Usuario recibido:", u);
-
-        // 1. Guardamos todo el objeto (necesario para el Calendario)
-        localStorage.setItem("usuario", JSON.stringify(u));
-
-        // 2. Guardamos datos sueltos
-        localStorage.setItem("usuarioNombre", u.nombre_completo || u.nombre || "Usuario");
-        localStorage.setItem("usuarioId", u.id);
-        localStorage.setItem("usuarioRol", u.rol || "empleado");
-
-        // 👇👇👇 AQUÍ ESTÁ LA SOLUCIÓN 👇👇👇
-        // Si no guardamos esto, el Dashboard muestra "Mañana / Tarde" por error
-        localStorage.setItem("usuarioTurno", u.turno); 
-        // 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆
-
-        navigate("/dashboard"); 
-
-      } else {
-        alert("❌ Error: Usuario o contraseña incorrectos");
+      if (!result.success) {
+        alert(`❌ Error: ${result.message}`);
       }
     } catch (error) {
       console.error("Error:", error);

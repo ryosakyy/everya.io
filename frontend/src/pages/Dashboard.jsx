@@ -1,64 +1,39 @@
-// Archivo: src/Dashboard.jsx
+/**
+ * Dashboard Page Component
+ * Main dashboard for employees and admins
+ */
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
+import { useAuth } from "../context/AuthContext";
+import { attendanceApi } from "../api/attendanceApi";
+import { getShiftLabel } from "../utils/formatters";
+import "../styles/dashboard.css";
 
-import "./dashboard.css";
+// Employee components
+import Calendario from "../components/employee/Calendario";
+import Nomina from "../components/employee/Nomina";
+import MisReportes from "../components/employee/MisReportes";
 
-// ✅ EMPLEADO
-import Calendario from "./components/Calendario";
-import Nomina from "./components/Nomina";
-
-// ✅ ADMIN
-import AdminCalendarios from "./components/AdminCalendarios";
-import CrearEmpleadosAdmin from "./components/CrearEmpleadosAdmin";
-import ReportesAdmin from "./components/ReportesAdmin";
+// Admin components
+import AdminCalendarios from "../components/admin/AdminCalendarios";
+import CrearEmpleadosAdmin from "../components/admin/CrearEmpleados";
+import ReportesAdmin from "../components/admin/ReportesAdmin";
+import NominaAdmin from "../components/admin/NominaAdmin";
 
 function Dashboard() {
-  const navigate = useNavigate();
-
-  // 👇 SEGURIDAD EXTRA: Si no hay ID, expulsar inmediatamente 👇
-  useEffect(() => {
-    if (!localStorage.getItem("usuarioId")) {
-      navigate("/");
-    }
-  }, [navigate]);
-  // 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆
-
-  const usuarioNombre = localStorage.getItem("usuarioNombre") || "Usuario";
-  const usuarioIdRaw = localStorage.getItem("usuarioId");
-  const usuarioId = Number(usuarioIdRaw);
-
-  // ✅ Rol guardado desde Login.jsx
-  const usuarioRol = localStorage.getItem("usuarioRol") || "empleado";
-  const esAdmin = usuarioRol === "admin";
-
-  // ✅ Turno (solo empleado)
-  const usuarioTurno = localStorage.getItem("usuarioTurno") || ""; // manana | tarde
-
+  const { userName, userId, isAdmin, userTurno, logout } = useAuth();
   const webcamRef = useRef(null);
 
-  const [tab, setTab] = useState("marcar");
+  const [tab, setTab] = useState(isAdmin ? "reportes" : "marcar");
   const [mensaje, setMensaje] = useState("");
   const [cargando, setCargando] = useState(false);
 
-  // ✅ Cuando cargue esAdmin, setea tab correcto
+  // Set correct tab when admin status loads
   useEffect(() => {
-    setTab(esAdmin ? "reportes" : "marcar");
-  }, [esAdmin]);
+    setTab(isAdmin ? "reportes" : "marcar");
+  }, [isAdmin]);
 
-  const turnoTexto = esAdmin
-    ? "Administrador"
-    : usuarioTurno === "manana"
-    ? "Turno Mañana (9:00 AM - 3:00 PM)"
-    : usuarioTurno === "tarde"
-    ? "Turno Tarde (3:00 PM - 9:00 PM)"
-    : "Turno Mañana / Tarde";
-
-  const cerrarSesion = () => {
-    localStorage.clear(); // Borra las llaves de seguridad
-    navigate("/");
-  };
+  const turnoTexto = getShiftLabel(userTurno, isAdmin);
 
   const registrarAsistencia = async () => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -67,7 +42,7 @@ function Dashboard() {
       alert("⚠️ La cámara está cargando, espera un segundo...");
       return;
     }
-    if (!usuarioId || Number.isNaN(usuarioId)) {
+    if (!userId || Number.isNaN(userId)) {
       alert("⚠️ No se encontró el ID del usuario. Vuelve a iniciar sesión.");
       return;
     }
@@ -76,13 +51,7 @@ function Dashboard() {
       setCargando(true);
       setMensaje("");
 
-      const res = await fetch("http://127.0.0.1:5000/marcar_asistencia", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_usuario: usuarioId, foto: imageSrc }),
-      });
-
-      const data = await res.json();
+      const data = await attendanceApi.mark(userId, imageSrc);
 
       if (data?.success) {
         const tipo = data.tipo || data.tipo_marcaje || "";
@@ -98,7 +67,7 @@ function Dashboard() {
         alert(`⚠️ ${msg}`);
       }
     } catch (error) {
-      console.error("Error al marcar asistencia:", error);
+      console.error("Error marking attendance:", error);
       setMensaje("❌ Error desconocido");
       alert("❌ Error desconocido");
     } finally {
@@ -120,12 +89,12 @@ function Dashboard() {
           </div>
 
           <div className="dash-user-text">
-            <div className="dash-user-name">{usuarioNombre}</div>
+            <div className="dash-user-name">{userName}</div>
             <div className="dash-user-shift">{turnoTexto}</div>
           </div>
         </div>
 
-        <button className="dash-logout" onClick={cerrarSesion}>
+        <button className="dash-logout" onClick={logout}>
           <span className="dash-logout-icon">↩</span>
           <span>Salir</span>
         </button>
@@ -133,8 +102,8 @@ function Dashboard() {
 
       {/* TABS */}
       <nav className="dash-tabs">
-        {/* ✅ EMPLEADO */}
-        {!esAdmin && (
+        {/* Employee Tabs */}
+        {!isAdmin && (
           <>
             <button
               className={`dash-tab ${tab === "marcar" ? "active" : ""}`}
@@ -151,16 +120,18 @@ function Dashboard() {
             </button>
 
             <button
-              className={`dash-tab ${tab === "nomina" ? "active" : ""}`}
-              onClick={() => setTab("nomina")}
+              className={`dash-tab ${tab === "mis-reportes" ? "active" : ""}`}
+              onClick={() => setTab("mis-reportes")}
             >
-              <span className="tab-icon">💲</span> Nómina
+              <span className="tab-icon">📋</span> Reportes
             </button>
+
+
           </>
         )}
 
-        {/* ✅ ADMIN */}
-        {esAdmin && (
+        {/* Admin Tabs */}
+        {isAdmin && (
           <>
             <button
               className={`dash-tab ${tab === "reportes" ? "active" : ""}`}
@@ -182,14 +153,21 @@ function Dashboard() {
             >
               <span className="tab-icon">👥</span> Empleados
             </button>
+
+            <button
+              className={`dash-tab ${tab === "admin-nominas" ? "active" : ""}`}
+              onClick={() => setTab("admin-nominas")}
+            >
+              <span className="tab-icon">💰</span> Nóminas
+            </button>
           </>
         )}
       </nav>
 
-      {/* CONTENIDO */}
+      {/* CONTENT */}
       <main className="dash-main">
-        {/* ✅ EMPLEADO */}
-        {!esAdmin && tab === "marcar" && (
+        {/* Employee Content */}
+        {!isAdmin && tab === "marcar" && (
           <section className="dash-card">
             <div className="dash-card-icon">📸</div>
 
@@ -216,13 +194,14 @@ function Dashboard() {
           </section>
         )}
 
-        {!esAdmin && tab === "calendario" && <Calendario />}
-        {!esAdmin && tab === "nomina" && <Nomina />}
+        {!isAdmin && tab === "calendario" && <Calendario />}
+        {!isAdmin && tab === "mis-reportes" && <MisReportes />}
 
-        {/* ✅ ADMIN */}
-        {esAdmin && tab === "reportes" && <ReportesAdmin />}
-        {esAdmin && tab === "calendarios" && <AdminCalendarios />}
-        {esAdmin && tab === "empleados" && <CrearEmpleadosAdmin />}
+        {/* Admin Content */}
+        {isAdmin && tab === "reportes" && <ReportesAdmin />}
+        {isAdmin && tab === "calendarios" && <AdminCalendarios />}
+        {isAdmin && tab === "empleados" && <CrearEmpleadosAdmin />}
+        {isAdmin && tab === "admin-nominas" && <NominaAdmin />}
       </main>
 
       <button className="dash-help" title="Ayuda">

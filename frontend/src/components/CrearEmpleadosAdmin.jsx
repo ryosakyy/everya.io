@@ -14,7 +14,7 @@ export default function CrearEmpleadosAdmin() {
     nombre_completo: "",
     password: "",
     turno: "manana",
-    rol: "empleado" 
+    rol: "empleado"
   });
 
   // 1. Cargar empleados existentes
@@ -23,7 +23,7 @@ export default function CrearEmpleadosAdmin() {
       setLoading(true);
       // ✅ CORREGIDO: Usa la URL de Railway
       const res = await fetch(`${API_URL}/admin/usuarios`);
-      
+
       if (!res.ok) {
         throw new Error(`Error del servidor: ${res.status}`);
       }
@@ -77,7 +77,7 @@ export default function CrearEmpleadosAdmin() {
           turno: "manana",
           rol: "empleado"
         });
-        cargarEmpleados(); 
+        cargarEmpleados();
       } else {
         alert(`❌ Error: ${data.mensaje}`);
       }
@@ -104,7 +104,7 @@ export default function CrearEmpleadosAdmin() {
       } else {
         alert("❌ Error al eliminar");
       }
-    } catch (error) {
+    } catch {
       alert("❌ Error de conexión");
     }
   };
@@ -137,15 +137,15 @@ export default function CrearEmpleadosAdmin() {
         />
 
         <div style={{ display: 'flex', gap: '10px' }}>
-            <select value={form.turno} onChange={(e) => setForm({ ...form, turno: e.target.value })}>
-              <option value="manana">🌞 Mañana</option>
-              <option value="tarde">🌅 Tarde</option>
-            </select>
+          <select value={form.turno} onChange={(e) => setForm({ ...form, turno: e.target.value })}>
+            <option value="manana">🌞 Mañana</option>
+            <option value="tarde">🌅 Tarde</option>
+          </select>
 
-            <select value={form.rol} onChange={(e) => setForm({ ...form, rol: e.target.value })}>
-              <option value="empleado">Trabajador</option>
-              <option value="admin">Administrador</option>
-            </select>
+          <select value={form.rol} onChange={(e) => setForm({ ...form, rol: e.target.value })}>
+            <option value="empleado">Trabajador</option>
+            <option value="admin">Administrador</option>
+          </select>
         </div>
 
         <button type="submit" className="btn-submit">➕ Crear Usuario</button>
@@ -155,19 +155,19 @@ export default function CrearEmpleadosAdmin() {
 
       {loading ? <p>Cargando lista...</p> : (
         <ul className="emp-list">
-          {empleados.length === 0 ? <p>No hay empleados registrados.</p> : 
+          {empleados.length === 0 ? <p>No hay empleados registrados.</p> :
             empleados.map((emp) => (
               <li key={emp.id} className="emp-item">
                 <div className="emp-info">
-                  <strong>{emp.nombre_completo}</strong> 
+                  <strong>{emp.nombre_completo}</strong>
                   <span className="emp-dni"> (DNI: {emp.dni_usuario})</span>
-                  <br/>
+                  <br />
                   <small className="emp-detail">
-                    {emp.turno} - {emp.rol === 'admin' ? <b style={{color:'red'}}>ADMIN</b> : 'Trabajador'}
+                    {emp.turno} - {emp.rol === 'admin' ? <b style={{ color: 'red' }}>ADMIN</b> : 'Trabajador'}
                   </small>
                 </div>
-                
-                <button 
+
+                <button
                   onClick={() => eliminarEmpleado(emp.id)}
                   className="btn-delete"
                 >

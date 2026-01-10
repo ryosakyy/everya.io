@@ -9,7 +9,7 @@ const normalizarFecha = (fechaSucia) => {
     const fecha = new Date(fechaSucia);
     if (isNaN(fecha.getTime())) return null;
     return fecha;
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -25,24 +25,28 @@ export default function Nomina() {
     valorMinuto: 0
   });
 
-  const [modoPrueba, setModoPrueba] = useState(false);
+  const [modoPrueba] = useState(() => {
+    const usuarioGuardado = localStorage.getItem("usuario");
+    const usuario = usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
+    const miDNI = usuario ? String(usuario.dni_usuario || usuario.dni || usuario.id || "") : "";
+    return miDNI === "";
+  });
 
   useEffect(() => {
     // 1. INTENTAR IDENTIFICAR AL USUARIO
     const usuarioGuardado = localStorage.getItem("usuario");
     const usuario = usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
-    
+
     // Buscamos el DNI en varios campos posibles
     const miDNI = usuario ? String(usuario.dni_usuario || usuario.dni || usuario.id || "") : "";
 
-    // Si no hay DNI, activamos el "Modo Prueba" para que veas datos
-    if (miDNI === "") setModoPrueba(true);
+    // (El modo prueba ya se inicializó arriba)
 
     // 2. DEFINIR EL MES ACTUAL
     const hoy = new Date();
     const mesActual = hoy.getMonth();      // 0 = Enero
     const anioActual = hoy.getFullYear();
-    
+
     // Formato bonito: "enero de 2026"
     const nombreMes = hoy.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
 
@@ -52,32 +56,32 @@ export default function Nomina() {
     fetch("https://everyaio-production.up.railway.app/reportes")
       .then((res) => res.json())
       .then((data) => {
-        
+
         // --- FILTRADO DE DATOS ---
         const asistenciasDelMes = data.filter((item) => {
           // A. LÓGICA DE USUARIO
           // Si tengo DNI, busco solo lo mío. Si no tengo DNI (modo prueba), acepto todo.
           const dniItem = String(item.dni_usuario || item.dni || "");
           const coincideUsuario = (miDNI === "") || (dniItem === miDNI);
-          
+
           // B. LÓGICA DE FECHA
           const fechaItem = normalizarFecha(item.fecha);
           if (!fechaItem) return false; // Fecha inválida se descarta
 
-          const esEsteMes = fechaItem.getMonth() === mesActual && 
-                            fechaItem.getFullYear() === anioActual;
+          const esEsteMes = fechaItem.getMonth() === mesActual &&
+            fechaItem.getFullYear() === anioActual;
 
           return coincideUsuario && esEsteMes;
         });
 
         // --- CÁLCULOS MATEMÁTICOS ---
-        
+
         // 1. Total Días
         const diasTrabajados = asistenciasDelMes.length;
 
         // 2. Total Minutos Tarde (Convirtiendo texto a número seguro)
         const totalMinutosTarde = asistenciasDelMes.reduce((suma, item) => {
-          const minutos = Number(item.minutos_tarde); 
+          const minutos = Number(item.minutos_tarde);
           return suma + (isNaN(minutos) ? 0 : minutos);
         }, 0);
 
@@ -86,7 +90,7 @@ export default function Nomina() {
 
         // 4. Valor del Minuto
         // Fórmula: Sueldo / 30 días / 6 horas / 60 minutos (180 horas al mes)
-        const valorMinuto = sueldoBase / 180 / 60; 
+        const valorMinuto = sueldoBase / 180 / 60;
 
         // 5. Descuento y Final
         const descuento = totalMinutosTarde * valorMinuto;
@@ -110,21 +114,21 @@ export default function Nomina() {
     <section className="nomina-card">
       <div className="nomina-header">
         <h2 className="nomina-title">Resumen de Nómina</h2>
-        <p className="nomina-subtitle" style={{textTransform: 'capitalize'}}>{datos.mesTexto}</p>
+        <p className="nomina-subtitle" style={{ textTransform: 'capitalize' }}>{datos.mesTexto}</p>
       </div>
 
       {/* AVISO DISCRETO SI ESTÁS EN MODO PRUEBA */}
       {modoPrueba && (
         <div style={{
-            fontSize: '12px', 
-            color: '#666', 
-            textAlign: 'center', 
-            marginBottom: '10px',
-            background: '#f3f4f6',
-            padding: '5px',
-            borderRadius: '4px'
+          fontSize: '12px',
+          color: '#666',
+          textAlign: 'center',
+          marginBottom: '10px',
+          background: '#f3f4f6',
+          padding: '5px',
+          borderRadius: '4px'
         }}>
-           ℹ️ Vista Previa (Mostrando todos los registros porque no has iniciado sesión)
+          ℹ️ Vista Previa (Mostrando todos los registros porque no has iniciado sesión)
         </div>
       )}
 
@@ -166,8 +170,8 @@ export default function Nomina() {
             Valor por minuto: <strong>S/{datos.valorMinuto.toFixed(4)}</strong>
           </li>
           <li>
-            Operación: {datos.totalTardanzas} min × S/{datos.valorMinuto.toFixed(4)} = 
-            <span style={{color: '#ef4444', fontWeight: 'bold'}}> -S/{datos.descuento.toFixed(2)}</span>
+            Operación: {datos.totalTardanzas} min × S/{datos.valorMinuto.toFixed(4)} =
+            <span style={{ color: '#ef4444', fontWeight: 'bold' }}> -S/{datos.descuento.toFixed(2)}</span>
           </li>
         </ul>
       </div>
